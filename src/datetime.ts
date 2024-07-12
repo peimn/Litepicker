@@ -482,16 +482,16 @@ export class DateTime {
 
   private formatTokens(token, lang) {
     switch (token) {
-      case 'YY': return String(this.getFullYear()).slice(-2);
-      case 'YYYY': return String(this.getFullYear());
+      case 'YY': return String(this.toLocaleString(lang, { year: '2-digit' }));
+      case 'YYYY': return String(this.toLocaleString(lang, { year: 'numeric' }));
 
-      case 'M': return String(this.getMonth() + 1);
-      case 'MM': return `0${this.getMonth() + 1}`.slice(-2);
+      case 'M': return String(this.toLocaleString(lang, { month: 'numeric' }));
+      case 'MM': return this.toLocaleString(lang, { month: '2-digit' });
       case 'MMM': return DateTime.shortMonths(lang)[this.getMonth()];
       case 'MMMM': return DateTime.longMonths(lang)[this.getMonth()];
 
-      case 'D': return String(this.getDate());
-      case 'DD': return `0${this.getDate()}`.slice(-2);
+      case 'D': return String(this.toLocaleString(lang, { day: 'numeric' }));
+      case 'DD': return this.toLocaleString(lang, { year: '2-digit' });
 
       default: return '';
     }

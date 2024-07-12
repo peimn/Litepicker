@@ -166,7 +166,7 @@ export class Calendar extends LPCore {
       if (date.getFullYear() > maxYear) {
         const option = document.createElement('option');
         option.value = String(date.getFullYear());
-        option.text = String(date.getFullYear());
+        option.text = String(date.toLocaleString(this.options.lang, { year: 'numeric' }));
         option.selected = true;
         option.disabled = true;
 
@@ -177,7 +177,7 @@ export class Calendar extends LPCore {
         const option = document.createElement('option');
         const optionYear = new DateTime(new Date(x, 0, 1, 0, 0, 0));
         option.value = String(x);
-        option.text = String(x);
+        option.text = String(optionYear.toLocaleString(this.options.lang, { year: 'numeric' }));
         option.disabled = (this.options.minDate
           && optionYear.isBefore(new DateTime(this.options.minDate), 'year'))
           || (this.options.maxDate
@@ -190,7 +190,7 @@ export class Calendar extends LPCore {
       if (date.getFullYear() < minYear) {
         const option = document.createElement('option');
         option.value = String(date.getFullYear());
-        option.text = String(date.getFullYear());
+        option.text = String(date.toLocaleString(this.options.lang, { year: 'numeric' }));
         option.selected = true;
         option.disabled = true;
 
@@ -227,7 +227,7 @@ export class Calendar extends LPCore {
     } else {
       const monthYear = document.createElement('span');
       monthYear.className = style.monthItemYear;
-      monthYear.innerHTML = String(date.getFullYear());
+      monthYear.innerHTML = String(date.toLocaleString(this.options.lang, { year: 'numeric' }));
       monthAndYear.appendChild(monthYear);
     }
 
@@ -310,7 +310,7 @@ export class Calendar extends LPCore {
 
     const day = document.createElement('div');
     day.className = style.dayItem;
-    day.innerHTML = String(date.getDate());
+    day.innerHTML = String(date.toLocaleString(this.options.lang, { day: 'numeric' }));
     day.dataset.time = String(date.getTime());
 
     if (date.toDateString() === (new Date()).toDateString()) {
@@ -492,7 +492,7 @@ export class Calendar extends LPCore {
     return t;
   }
 
-  private weekdayName(day, representation = 'short') {
+  private weekdayName(day: number, representation: 'short' | 'long' | 'narrow'  = 'short') {
     return new Date(1970, 0, day, 12, 0, 0, 0)
       .toLocaleString(this.options.lang, { weekday: representation });
   }
